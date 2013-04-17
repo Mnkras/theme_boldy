@@ -4,8 +4,40 @@
 <head profile="http://gmpg.org/xfn/11">
 
 	<?php    Loader::element('header_required'); ?>
-	<link href="<?php   echo $this->getThemePath()?>/style.css" rel="stylesheet" type="text/css" />
-	<link href="<?php   echo $this->getThemePath()?>/css/ddsmoothmenu.css" rel="stylesheet" type="text/css" />
+
+	<?
+	/* Check if the site uses multiple languages */
+	$switchLanguageBT = BlockType::getByHandle('switch_language');
+	
+	/* Find page locale and directionality */
+	$isRtlHomepage = false; // TODO: setup via theme setup or similar			
+
+	if ($switchLanguageBT) {
+		$switchLanguageSH = Loader::helper('section', 'multilingual');
+		if (Page::getCurrentPage()->getCollectionID() == 1) {
+			// Homepage
+			$logoSuffix = '_home';
+			$isRtlPage = $isRtlHomepage;			
+		} else {
+			// Regular page in a given language
+			$lang = $switchLanguageSH::getLocale();
+			$direction = Zend_Locale_Data::getList($lang, 'layout', 'characters');
+			
+			$logoSuffix = '_'.$lang;		
+			$isRtlPage = ($direction['characters'] == 'right-to-left');
+		}
+
+	} else {
+		// Default directionality
+		$logoSuffix = '';
+		$isRtlPage = $isRtlHomepage;
+	}
+
+	$rtlSuffix = ($isRtlPage ? '-rtl' : '');
+	?>
+	
+	<link href="<?php   echo $this->getThemePath()?>/style<?= $rtlSuffix ?>.css" rel="stylesheet" type="text/css" />
+	<link href="<?php   echo $this->getThemePath()?>/css/ddsmoothmenu<?= $rtlSuffix ?>.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="<?php   echo $this->getThemePath()?>/js/ddsmoothmenu.js"></script>
 	<script type="text/javascript" src="<?php   echo $this->getThemePath()?>/js/custom.js"></script>
 	<script type="text/javascript" src="<?php   echo $this->getThemePath()?>/js/cufon-yui.js"></script>
@@ -29,21 +61,37 @@
 			<div id="header">
 				<div id="logo">
 					<h1>
-						<a href="<?php   echo DIR_REL?>/">
-							<?php    $block=Block::getByName('My_Site_Name');
-							if( $block && $block->bID ) $block->display();   
-							else echo SITE;
-							?>
-						</a>
+						<?
+						// Use a global logo area per language
+						$a = new GlobalArea("Logo$logoSuffix");
+						$a->display($c);
+						?>
 					</h1>
 				</div>
 				<div id="mainMenu" class="ddsmoothmenu">
-					<?php    $bt=BlockType::getByHandle('autonav'); $bt->controller->displayPages = 'top';
-						$bt->controller->orderBy = 'display_asc';                    
-						$bt->controller->displaySubPages = 'all'; 
-						$bt->controller->displaySubPageLevels = 'custom';
-						$bt->controller->displaySubPageLevelsNum = '3';   
+					<?
+					if ($logoSuffix == '_home') {
+						$a = new Area('HomeMenu');
+						$a->display($c);
+						
+					} else {
+						$bt = BlockType::getByHandle('autonav');
+						$bt->controller->displayPages = ($logoSuffix ? 'second_level' : 'top');
+						$bt->controller->orderBy = 'display_asc';
+						$bt->controller->displaySubPages = 'all';
+						$bt->controller->displaySubPageLevels = 'all';
+//						$bt->controller->displaySubPageLevels = 'custom';
+//						$bt->controller->displaySubPageLevelsNum = '3';
 						$bt->render('templates/header_menu_dropdown');
+					}
+					?>
+				</div>
+				<div id="langSelection">
+					<?
+					if ($switchLanguageBT) {
+						$switchLanguageBT->controller->label = '';
+						$switchLanguageBT->render('templates/seo_flags/view');
+					}
 					?>
 				</div>
 				<?php    $page = Page::getByPath('/search/search-results');
