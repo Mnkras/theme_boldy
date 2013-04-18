@@ -1,5 +1,12 @@
-<?php    defined('C5_EXECUTE') or die("Access Denied.");
-$this->inc('elements/fullheader.php'); ?>
+<?php
+defined('C5_EXECUTE') or die("Access Denied.");
+
+global $themeBoldyBodyId;	// Force specific body ID
+$themeBoldyBodyId = 'portfolio';
+
+$this->inc('elements/header.php');
+?>
+
 			<div id="content">
 				<div id="colFull">
 				<div style="clear:both"></div>

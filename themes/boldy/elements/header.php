@@ -6,18 +6,26 @@
 	<?php    Loader::element('header_required'); ?>
 
 	<?
-	/* Check if the site uses multiple languages */
+	global $themeBoldyBodyId;
+	
+	// Theme setup options (TODO: setup via theme setup or similar)
+	$isRtlHomepage = false;
+
+	// State indicators
+	$isHomepage = ($c->getCollectionID() == HOME_CID);
+
+	// Check if the site uses multiple languages
 	$switchLanguageBT = BlockType::getByHandle('switch_language');
 	
-	/* Find page locale and directionality */
-	$isRtlHomepage = false; // TODO: setup via theme setup or similar			
-
+	// Find page locale and directionality
 	if ($switchLanguageBT) {
+		// Multilingual website
 		$switchLanguageSH = Loader::helper('section', 'multilingual');
-		if (Page::getCurrentPage()->getCollectionID() == 1) {
+		if ($isHomepage) {
 			// Homepage
 			$logoSuffix = '_home';
-			$isRtlPage = $isRtlHomepage;			
+			$isRtlPage = $isRtlHomepage;
+
 		} else {
 			// Regular page in a given language
 			$lang = $switchLanguageSH::getLocale();
@@ -28,7 +36,7 @@
 		}
 
 	} else {
-		// Default directionality
+		// Single language website - use default directionality
 		$logoSuffix = '';
 		$isRtlPage = $isRtlHomepage;
 	}
@@ -55,22 +63,36 @@
 		Cufon.replace('h1',{hover: true})('h2',{hover: true})('h3')('.reply',{hover:true})('.more-link');
 	</script>
 </head>
-<body>
+<body<?= ($themeBoldyBodyId ? ' id="'.$themeBoldyBodyId.'"' : '') ?>>
 	<div id="mainWrapper">
 		<div id="wrapper">
 			<div id="header">
 				<div id="logo">
 					<h1>
 						<?
-						// Use a global logo area per language
-						$a = new GlobalArea("Logo$logoSuffix");
-						$a->display($c);
+						if ($logoSuffix) {
+							// Multilingual - use a global logo area per language
+							$a = new GlobalArea("Logo$logoSuffix");
+							$a->display($c);
+							
+						} else {
+							// Single language - fallback to original code
+						?>
+							<a href="<?php   echo DIR_REL?>/">
+								<?php    $block=Block::getByName('My_Site_Name');
+								if( $block && $block->bID ) $block->display();   
+								else echo SITE;
+								?>
+							</a>
+						<?
+						}
 						?>
 					</h1>
 				</div>
 				<div id="mainMenu" class="ddsmoothmenu">
 					<?
 					if ($logoSuffix == '_home') {
+						// Homepage of a multilingual site
 						$a = new Area('HomeMenu');
 						$a->display($c);
 						
