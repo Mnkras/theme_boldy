@@ -1,10 +1,7 @@
 <?php
 defined('C5_EXECUTE') or die("Access Denied.");
 
-global $themeBoldyBodyId;	// Force specific body ID
-$themeBoldyBodyId = 'portfolio';
-
-$this->inc('elements/header.php');
+$this->inc('elements/header.php', array('themeBoldyBodyId' => 'portfolio'));
 ?>
 
 			<div id="content">

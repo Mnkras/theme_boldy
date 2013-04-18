@@ -6,8 +6,6 @@
 	<?php    Loader::element('header_required'); ?>
 
 	<?
-	global $themeBoldyBodyId;
-	
 	// Theme setup options (TODO: setup via theme setup or similar)
 	$isRtlHomepage = false;
 
@@ -63,7 +61,7 @@
 		Cufon.replace('h1',{hover: true})('h2',{hover: true})('h3')('.reply',{hover:true})('.more-link');
 	</script>
 </head>
-<body<?= ($themeBoldyBodyId ? ' id="'.$themeBoldyBodyId.'"' : '') ?>>
+<body<?= ((isset($themeBoldyBodyId) && $themeBoldyBodyId) ? ' id="'.$themeBoldyBodyId.'"' : '') ?>>
 	<div id="mainWrapper">
 		<div id="wrapper">
 			<div id="header">
