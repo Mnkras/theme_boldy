@@ -932,5 +932,12 @@ line-height:140%;
    -webkit-border-radius:4px;
 }
 
+/* Language flags */
+#langSelection {
+	float: right;
+	margin-top: 35px;
+}
 
-
+#langSelection a {
+	padding: 2px;
+}

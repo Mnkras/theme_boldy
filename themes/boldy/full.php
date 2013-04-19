@@ -1,5 +1,9 @@
-<?php    defined('C5_EXECUTE') or die("Access Denied.");
-$this->inc('elements/fullheader.php'); ?>
+<?php
+defined('C5_EXECUTE') or die("Access Denied.");
+
+$this->inc('elements/header.php', array('themeBoldyBodyId' => 'portfolio'));
+?>
+
 			<div id="content">
 				<div id="colFull">
 				<div style="clear:both"></div>
