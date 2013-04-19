@@ -1,3 +1,4 @@
 1.0 - Initial Release
 1.1 - Bug fix for auto-nav spacing in sidebar
 2.0 - Now supports Theme Options Lite
+2.1 - Multilingual Support (Thanks Gil Schwartz)

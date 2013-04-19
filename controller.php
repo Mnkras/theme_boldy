@@ -1,26 +1,25 @@
-<?php      
-
+<?php
 defined('C5_EXECUTE') or die(_("Access Denied."));
 
 class ThemeBoldyPackage extends Package {
 
 	protected $pkgHandle = 'theme_boldy';
 	protected $appVersionRequired = '5.4.1';
-	protected $pkgVersion = '2.0';
-		
+	protected $pkgVersion = '2.1';
+
 	public function getPackageName() {
 		return t("Boldy");
 	}
-	
+
 	public function getPackageDescription() {
 		return t("Installs the Boldy theme.");
 	}
-	
+
 	public function install() {
 		$pkg = parent::install();
-		
+
 		PageTheme::add('boldy', $pkg);
-		
+
 		if(is_object(Loader::package('theme_options_lite'))) {
 			Loader::model('social', 'theme_options_lite');
 			$twitter = Social::getByHandle('twitter');
@@ -41,10 +40,10 @@ class ThemeBoldyPackage extends Package {
 			}
 		}
 	}
-	
+
 	public function upgrade() {
 		parent::upgrade();
-		
+
 		if(is_object(Loader::package('theme_options_lite'))) {
 			Loader::model('social', 'theme_options_lite');
 			$twitter = Social::getByHandle('twitter');
@@ -65,5 +64,5 @@ class ThemeBoldyPackage extends Package {
 			}
 		}
 	}
-	
+
 }
