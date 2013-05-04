@@ -26,7 +26,7 @@
 
 		} else {
 			// Regular page in a given language
-			$lang = $switchLanguageSH::getLocale();
+			$lang = $switchLanguageSH->getLocale();
 			$direction = Zend_Locale_Data::getList($lang, 'layout', 'characters');
 			
 			$logoSuffix = '_'.$lang;		
