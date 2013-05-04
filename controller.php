@@ -5,7 +5,7 @@ class ThemeBoldyPackage extends Package {
 
 	protected $pkgHandle = 'theme_boldy';
 	protected $appVersionRequired = '5.4.1';
-	protected $pkgVersion = '2.1';
+	protected $pkgVersion = '2.2';
 
 	public function getPackageName() {
 		return t("Boldy");
