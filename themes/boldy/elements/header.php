@@ -116,11 +116,11 @@
 				</div>
 				<?php    $page = Page::getByPath('/search/search-results');
 				if(!$page->isError()) {?>
-					<div id="topSearch">
+					<div id="topSearch" style="z-index:101">
 						<form id="searchform" action="<?php   echo $this->url('/search/search-results/');?>" method="get">
 							<input name="search_paths[]" type="hidden" value=""/>
 							<input name="submit" type="submit" id="searchsubmit" value=""/>
-							<input name="query" type="text" id="s" class="s" value="Search..."/>
+							<input name="query" type="text" id="s" class="s" value="<?php echo t('Search...')?>"/>
 						</form>
 					</div>
 				<?php    } ?>

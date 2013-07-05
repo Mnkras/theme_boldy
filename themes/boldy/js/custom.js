@@ -20,6 +20,8 @@ $('#s').focus(function() {
 
 $('#s').blur(function() {
 		$(this).animate({width: "100"}, 300 );
-		$(this).val('Search...');
+		if($(this).val() == '') {
+			$(this).val('Search...');
+		}
 });
 });

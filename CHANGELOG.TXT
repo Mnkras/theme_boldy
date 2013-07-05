@@ -3,3 +3,4 @@
 2.0 - Now supports Theme Options Lite
 2.1 - Multilingual Support (Thanks Gil Schwartz)
 2.2 - Fixed error on older PHP installs and disable drop down code when there are no menus
+2.3 - Fixed search field removing the search value and z-index
